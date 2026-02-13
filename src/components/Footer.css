@@ -1,0 +1,43 @@
+/* src/components/Footer.css */
+
+.footer {
+    background: linear-gradient(to right, #1218d3, #8e24aa);
+    color: #fff;
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    margin-top: 3rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .footer-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-content p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-icons a {
+    color: white;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-icons a:hover {
+    color: #ffcc70;
+  }
+  
+  .footer-bottom p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  

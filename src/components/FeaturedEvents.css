@@ -1,0 +1,90 @@
+/* src/components/FeaturedEvents.css */
+
+.featured-events {
+    padding: 4rem 2rem;
+    background: linear-gradient(to bottom, #2a2a72, #009ffd);
+    color: white;
+    text-align: center;
+  }
+  
+  .featured-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+  
+  .featured-event-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .featured-event-card {
+    background: #3a3a7a;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 300px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+  }
+  
+  .featured-event-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .featured-event-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+  
+  .featured-event-card p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #d0d0ff;
+  }
+  
+  .featured-event-date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #cfcfff;
+  }
+  
+  .calendar-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .featured-event-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .featured-event-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .register-btn {
+    background: linear-gradient(90deg,#f74b82 0,#fa8231 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 13px 36px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(120,80,220,0.08);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .register-btn:hover  {
+    background: linear-gradient(90deg,#d13a62 0,#e56a1a 100%);
+  }
+  

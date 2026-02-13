@@ -1,0 +1,64 @@
+/* src/components/UpcomingEvents.css */
+
+.upcoming-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .overlay-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    top: 40%;
+    padding: 0 2rem;
+  }
+  
+  .overlay-text h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .overlay-text p {
+    font-size: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .upcoming-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .upcoming-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 🔥 THIS FIXES EVERYTHING */
+    z-index: 1;
+  }
+  
+  .overlay-text {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  

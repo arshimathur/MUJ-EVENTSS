@@ -1,0 +1,221 @@
+
+> supabase-backend@1.0.0 dev
+> node server.js
+
+API listening on :8080
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}
+[dashboard/student] bookings aggregate error: {
+  code: 'PGRST200',
+  details: "Searched for a foreign key relationship between 'bookings' and 'sum' in the schema 'public', but no matches were found.",
+  hint: null,
+  message: "Could not find a relationship between 'bookings' and 'sum' in the schema cache"
+}
+[dashboard/student] recent_activity error: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.event_availability'",
+  message: "Could not find the table 'public.recent_activity' in the schema cache"
+}

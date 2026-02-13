@@ -1,0 +1,193 @@
+.events-container {
+    padding: 4rem 2rem;
+    background: #fefeff;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .events-title {
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+  
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .event-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  
+  .event-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .event-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .event-content {
+    padding: 1.2rem;
+  }
+  
+  .event-date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+  }
+  
+  .event-desc {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  
+  .event-location {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .event-category {
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    background-color: #e4e4ff;
+    color: #333
+  }  
+  .participate-btn {
+    padding: 0.6rem 1.2rem;
+    background-color: #ff5f7e;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .participate-btn:hover {
+    background-color: #e34468;
+  }
+
+  /* src/pages/Events.css - purple theme */
+.events-container {
+  padding: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.events-title {
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: #3b3058;
+  font-weight: 700;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* Card */
+.event-card {
+  background: linear-gradient(180deg, #faf8ff 0%, #fff 100%);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(54, 42, 139, 0.06);
+  border: 1px solid rgba(110,89,240,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 60px rgba(99, 66, 255, 0.12);
+}
+
+.event-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content area */
+.event-content {
+  padding: 16px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-content h3 {
+  margin: 0 0 6px;
+  color: #2f2250;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.event-date, .event-location {
+  color: #615478;
+  font-size: 13px;
+  margin: 6px 0;
+}
+
+.event-desc {
+  color: #4a3e6d;
+  font-size: 14px;
+  margin-top: 8px;
+  flex: 1 1 auto;
+}
+
+/* Badge */
+.event-category {
+  display: inline-block;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #efe9ff, #f7f3ff);
+  color: #5a3bb8;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+  border: 1px solid rgba(90,59,184,0.08);
+}
+
+/* CTA button */
+.participate-btn {
+  margin-top: 12px;
+  display: inline-block;
+  background: linear-gradient(90deg, #7a5cf4, #9a6dfb);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(122,92,244,0.18);
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+.participate-btn:hover {
+  transform: translateY(-3px);
+  opacity: 0.98;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .event-image { height: 140px; }
+  .events-title { font-size: 22px; }
+}

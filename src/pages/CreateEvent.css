@@ -1,0 +1,111 @@
+.ce-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e1f4f, #0f172a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 16px;
+  }
+  
+  .ce-card {
+    width: 480px;
+    background: #f9f9ff;
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
+  
+  .ce-card h2 {
+    text-align: center;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  
+  .ce-sub {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Labels */
+  .ce-card label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    margin-top: 14px;   /* reduced spacing */
+    color: #333;
+  }
+  
+  /* Inputs */
+  .ce-card input,
+  .ce-card textarea,
+  .ce-card select {
+    width: 100%;
+    padding: 10px 12px;      /* reduced padding */
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 14px;
+    margin-bottom: 6px;      /* reduced spacing */
+    outline: none;
+  }
+  
+  .ce-card textarea {
+    resize: none;
+    min-height: 70px;
+  }
+  
+  /* Section title */
+  .ce-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 18px;        /* reduced */
+    margin-bottom: 8px;
+    color: #5b3fd3;
+  }
+  
+  /* Divider */
+  .ce-divider {
+    height: 1px;
+    background: #ececec;
+    margin: 14px 0;          /* reduced */
+  }
+  
+  /* Row layout */
+  .ce-row {
+    display: flex;
+    gap: 12px;               /* smaller gap */
+  }
+  
+  .ce-row > div {
+    flex: 1;
+  }
+  
+  /* Button */
+  .ce-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #7c3aed, #5b3fd3);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .ce-button:hover {
+    opacity: 0.9;
+  }
+  
+  .ce-note {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+  }
+  

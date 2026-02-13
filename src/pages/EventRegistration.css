@@ -1,0 +1,68 @@
+.reg-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f2a60, #0e1a3c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  
+  .reg-card {
+    width: 420px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  
+  .reg-icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .reg-card h2 {
+    margin-bottom: 5px;
+  }
+  
+  .reg-card p {
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* ✅ Scoped form styles */
+  .reg-card input,
+  .reg-card select,
+  .reg-card textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .reg-card button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .reg-card button:disabled {
+    opacity: 0.6;
+  }
+  
+  .reg-message {
+    margin-top: 15px;
+    font-weight: 500;
+  }
+  

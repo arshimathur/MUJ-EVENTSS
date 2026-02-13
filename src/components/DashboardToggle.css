@@ -1,0 +1,40 @@
+.dashboard-toggle {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    justify-content: flex-end;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .toggle-btn {
+    background: #f1ecfa; /* Soft purple or grey, so text is readable */
+    color: #5c46d4;      /* Deep purple text */
+    font-size: 1.15rem;
+    font-weight: 520;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 16px 0 rgba(120,110,180,0.09);
+    transition: background 0.15s, color 0.15s;
+    margin-right: 7px;
+  }
+  
+  .toggle-btn.active {
+    background: linear-gradient(90deg,#7a6be7,#af6ee5);
+    color: #fff;
+  }
+  
+  .welcome {
+    color: #4a2d7c;
+    font-size: 1.12rem;
+    font-weight: 500;
+    margin-left: 18px;
+  }
+  .welcome strong {
+    color: #4a2d7c;
+    font-weight: 700;
+  }
+  
