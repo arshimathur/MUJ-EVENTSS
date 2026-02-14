@@ -197,7 +197,7 @@ app.post("/registrations", authenticate, async (req, res) => {
           last_name: lastName || null,
           email,
           phone: phone || null,
-          registration_number: regNumber || null,
+          reg_number: regNumber|| null,
           attendees: attendees ? Number(attendees) : 1,
           requirements: requirements || null
         }
