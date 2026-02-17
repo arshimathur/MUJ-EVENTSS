@@ -10,7 +10,7 @@
 
 ---
 
-## 📌 Overview
+##  Overview
 
 MUJ EVENTS is a full-stack web application developed under Project Based Learning (PBL-3) at Manipal University Jaipur.
 
@@ -20,9 +20,9 @@ It eliminates fragmented communication methods such as WhatsApp groups, emails, 
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 👤 User Features
+###  User Features
 
 - Secure MUJ email-based authentication using Supabase Auth  
 - User registration and login  
@@ -34,7 +34,7 @@ It eliminates fragmented communication methods such as WhatsApp groups, emails, 
 
 ---
 
-### 🏫 Organizer Features
+###  Organizer Features
 
 - Event creation and management  
 - Participant tracking  
@@ -44,26 +44,26 @@ It eliminates fragmented communication methods such as WhatsApp groups, emails, 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
-### 🎨 Frontend
+###  Frontend
 - React.js  
 - React Router  
 - CSS3  
 - JavaScript (ES6+)  
 
-### ⚙️ Backend
+###  Backend
 - Node.js  
 - Express.js  
 - RESTful APIs  
 - Environment-based configuration (.env)  
 
-### 🗄️ Database & Authentication
+###  Database & Authentication
 - Supabase (PostgreSQL)  
 - Supabase Auth (Email-based login)  
 - Real-time database updates  
 
-### 🧪 Tools & Deployment
+###  Tools & Deployment
 - Git & GitHub  
 - Postman (API Testing)  
 - Netlify (Frontend Deployment – Planned)  
@@ -71,7 +71,7 @@ It eliminates fragmented communication methods such as WhatsApp groups, emails, 
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 muj-events/
@@ -94,9 +94,9 @@ muj-events/
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
-### 1️⃣ Clone the Repository
+### 1️ Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/muj-events.git
@@ -105,7 +105,7 @@ cd muj-events
 
 ---
 
-### 2️⃣ Backend Setup
+### 2️ Backend Setup
 
 ```bash
 cd backend
@@ -121,7 +121,7 @@ http://localhost:5000
 
 ---
 
-### 3️⃣ Frontend Setup
+### 3️ Frontend Setup
 
 ```bash
 cd frontend
@@ -137,7 +137,7 @@ http://localhost:3000
 
 ---
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 Create a `.env` file inside the backend folder:
 
@@ -156,15 +156,15 @@ backend/.env
 
 ---
 
-## 📊 Database Design
+##  Database Design
 
-### 🔹 profiles
+###  profiles
 - user_id (Primary Key)  
 - name  
 - email  
 - created_at  
 
-### 🔹 events
+###  events
 - event_id (Primary Key)  
 - title  
 - description  
@@ -172,12 +172,12 @@ backend/.env
 - location  
 - capacity  
 
-### 🔹 clubs
+###  clubs
 - club_id (Primary Key)  
 - name  
 - description  
 
-### 🔹 bookings
+###  bookings
 - booking_id (Primary Key)  
 - user_id (Foreign Key)  
 - event_id (Foreign Key)  
@@ -185,7 +185,7 @@ backend/.env
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 - Functional Testing  
 - API Testing (Postman / curl)  
@@ -195,7 +195,7 @@ backend/.env
 
 ---
 
-## 📈 Future Enhancements
+##  Future Enhancements
 
 - Admin Dashboard  
 - Email Notifications   
@@ -205,7 +205,7 @@ backend/.env
 
 ---
 
-## 🎯 Project Impact
+##  Project Impact
 
 MUJ EVENTS improves:
 
@@ -218,7 +218,7 @@ The system is modular, scalable, and cloud-deployment ready.
 
 ---
 
-## 👩‍💻 Authors
+##  Authors
 
 Ishika  
 Registration No: 23FE10CSE00102  
