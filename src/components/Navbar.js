@@ -111,14 +111,31 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div
-        className={`backdrop ${sidebarOpen ? 'show' : ''}`}
-        onClick={closeSidebar}
-      />
+      {sidebarOpen && (
+  <div
+    className="backdrop show"
+    onClick={closeSidebar}
+  />
+)}
 
-      <aside className={`sidebar ${sidebarOpen ? 'is-open' : ''}`} aria-hidden={!sidebarOpen}>
-        <button className="close-btn" onClick={closeSidebar} aria-label="Close menu">✕</button>
-        <ul>
+
+<aside className={`sidebar ${sidebarOpen ? 'is-open' : ''}`} aria-hidden={!sidebarOpen}>
+  <button className="close-btn" onClick={closeSidebar} aria-label="Close menu">✕</button>
+
+  {/* 🔥 Sidebar Title */}
+  <div
+    style={{
+      fontSize: "20px",
+      fontWeight: "700",
+      color: "white",
+      marginBottom: "20px"
+    }}
+  >
+    Menu
+  </div>
+
+  <ul>
+
           <li>
             <Link to="/" onClick={closeSidebar}>
               <FaHome style={{ marginRight: '9px', marginBottom: '-3px' }} /> Home

@@ -1,0 +1,66 @@
+.explore-wrapper {
+    padding: 80px 10% 120px 10%;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    text-align: center;
+    color: white;
+  }
+  
+  .explore-header h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  
+  .explore-header p {
+    opacity: 0.8;
+    margin-bottom: 60px;
+  }
+  
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+  }
+  
+  .explore-card {
+    background: linear-gradient(180deg, #6d28d9, #4c1d95);
+    padding: 40px 30px;
+    border-radius: 25px;
+    text-align: left;
+    transition: 0.3s ease;
+  }
+  
+  .explore-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  
+  .explore-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .explore-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .explore-card p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+  }
+  
+  .explore-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #f43f5e, #f97316);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .explore-wrapper {
+    margin-bottom: 0;
+  }
+  

@@ -2,7 +2,7 @@
 
 .featured-events {
     padding: 4rem 2rem;
-    background: linear-gradient(to bottom, #2a2a72, #009ffd);
+    background: transparent;
     color: white;
     text-align: center;
   }

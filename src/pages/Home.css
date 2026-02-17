@@ -1,6 +1,9 @@
 .home {
     font-family: 'Poppins', sans-serif;
   }
+  .home {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  }
   
   /* Hero Section */
   .hero-section {
@@ -81,4 +84,3 @@
     flex-direction: column;
     gap: 2rem;
   }
-  
