@@ -1,70 +1,236 @@
-# Getting Started with Create React App
+# 🎓 MUJ EVENTS  
+### Centralized University Event Management Platform  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
+![Express](https://img.shields.io/badge/API-Express-black)
+![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E)
+![PostgreSQL](https://img.shields.io/badge/DB-PostgreSQL-blue)
+![Status](https://img.shields.io/badge/Project-Active-success)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📌 Overview
 
-### `npm start`
+MUJ EVENTS is a full-stack web application developed under Project Based Learning (PBL-3) at Manipal University Jaipur.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The platform provides a centralized digital system for managing university events, student registrations, and club activities.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+It eliminates fragmented communication methods such as WhatsApp groups, emails, and posters by replacing them with a secure and scalable web-based solution.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Features
 
-### `npm run build`
+### 👤 User Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Secure MUJ email-based authentication using Supabase Auth  
+- User registration and login  
+- Browse upcoming university events  
+- View detailed event information  
+- Real-time event registration  
+- Participation tracking  
+- Fully responsive UI (Mobile + Desktop)  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🏫 Organizer Features
 
-### `npm run eject`
+- Event creation and management  
+- Participant tracking  
+- Database-driven insights  
+- Secure backend API architecture  
+- Structured event capacity management  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🛠️ Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🎨 Frontend
+- React.js  
+- React Router  
+- CSS3  
+- JavaScript (ES6+)  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### ⚙️ Backend
+- Node.js  
+- Express.js  
+- RESTful APIs  
+- Environment-based configuration (.env)  
 
-## Learn More
+### 🗄️ Database & Authentication
+- Supabase (PostgreSQL)  
+- Supabase Auth (Email-based login)  
+- Real-time database updates  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🧪 Tools & Deployment
+- Git & GitHub  
+- Postman (API Testing)  
+- Netlify (Frontend Deployment – Planned)  
+- Render / Heroku (Backend Deployment – Planned)  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🗂️ Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+muj-events/
+├── frontend/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       └── App.js
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── routes/
+│   ├── models/
+│   ├── app.js
+│   └── .env
+│
+└── README.md
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## ⚙️ Installation & Setup
 
-### Making a Progressive Web App
+### 1️⃣ Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+git clone https://github.com/yourusername/muj-events.git
+cd muj-events
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 2️⃣ Backend Setup
 
-### Deployment
+```bash
+cd backend
+npm install
+npx nodemon app.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Server runs at:
 
-### `npm run build` fails to minify
+```
+http://localhost:5000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+### 3️⃣ Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Frontend runs at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file inside the backend folder:
+
+```
+PORT=5000
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+⚠️ Do NOT push `.env` to GitHub.  
+Add this to `.gitignore`:
+
+```
+backend/.env
+```
+
+---
+
+## 📊 Database Design
+
+### 🔹 profiles
+- user_id (Primary Key)  
+- name  
+- email  
+- created_at  
+
+### 🔹 events
+- event_id (Primary Key)  
+- title  
+- description  
+- date  
+- location  
+- capacity  
+
+### 🔹 clubs
+- club_id (Primary Key)  
+- name  
+- description  
+
+### 🔹 bookings
+- booking_id (Primary Key)  
+- user_id (Foreign Key)  
+- event_id (Foreign Key)  
+- registration_timestamp  
+
+---
+
+## 🧪 Testing
+
+- Functional Testing  
+- API Testing (Postman / curl)  
+- Cross-browser Testing  
+- Security Testing (JWT + Email Validation)  
+- Performance Testing  
+
+---
+
+## 📈 Future Enhancements
+
+- Admin Dashboard  
+- Email Notifications   
+- Waitlist System  
+- Media Uploads (Supabase Storage)  
+- Event Analytics Dashboard  
+
+---
+
+## 🎯 Project Impact
+
+MUJ EVENTS improves:
+
+- Student engagement  
+- Event visibility  
+- Registration efficiency  
+- Organizer workflow management  
+
+The system is modular, scalable, and cloud-deployment ready.
+
+---
+
+## 👩‍💻 Authors
+
+Ishika  
+Registration No: 23FE10CSE00102  
+
+Arshi Mathur  
+Registration No: 23FE10CSE00002  
+
+Department of Computer Science & Engineering  
+Manipal University Jaipur  
+
+
+---
+
+⭐ If you found this project helpful, don’t forget to star the repository!
+
