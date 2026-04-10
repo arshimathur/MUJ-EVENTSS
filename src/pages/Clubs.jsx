@@ -1,165 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import './Clubs.css';
-
-const clubs = [
-  // 💻 Technical Clubs
-  {
-    name: 'IEEE Student Branch',
-    tags: '#antenna #research',
-    description: 'IEEE APS deals with antenna and propagation research.',
-    category: 'Technical',
-  },
-  {
-    name: 'ACM MUJ Student Chapter',
-    tags: '#coding #developer',
-    description: 'Promotes computing and technical excellence.',
-    category: 'Technical',
-  },
-  {
-    name: 'Cyber Space',
-    tags: '#cybersecurity #ethicalhacking',
-    description: 'Focuses on cybersecurity and ethical hacking.',
-    category: 'Technical',
-  },
-  {
-    name: 'IEEE MTTS Student Chapter',
-    tags: '#microwave #theory',
-    description: 'Focuses on microwave theory and technology.',
-    category: 'Technical',
-  },
-  {
-    name: 'IEEE MUJ Women in Engineering',
-    tags: '#womenintech #empowerment',
-    description: 'A student-led technical community.',
-    category: 'Technical',
-  },
-  {
-    name: 'LearnIT',
-    tags: '#coding #development',
-    description: 'Dedicated to software development and coding.',
-    category: 'Technical',
-  },
-  {
-    name: 'Turing Sapiens',
-    tags: '#ai #ml',
-    description: 'Focuses on AI, ML, and problem-solving.',
-    category: 'Technical',
-  },
-  {
-    name: 'ANOVA',
-    tags: '#data #analytics',
-    description: 'Data science and analytics club.',
-    category: 'Technical',
-  },
-  {
-    name: 'AIML Community',
-    tags: '#ai #ml',
-    description: 'Community dedicated to AI and machine learning.',
-    category: 'Technical',
-  },
-  {
-    name: 'Cosmos - The Science Club',
-    tags: '#science #projects',
-    description: 'Exploring science through hands-on projects.',
-    category: 'Technical',
-  },
-  {
-    name: 'IEEE RAS',
-    tags: '#robotics #automation',
-    description: 'For robotics enthusiasts.',
-    category: 'Technical',
-  },
-  {
-    name: 'Google Developer Student Clubs',
-    tags: '#google #development',
-    description: 'Fosters developer skills and innovation.',
-    category: 'Technical',
-  },
-
-  // 🎭 Non-Technical Clubs
-  {
-    name: 'Aperture',
-    tags: '#photography #cinematography',
-    description: 'Photography and cinematography club of MUJ.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Cactus - Socio Cultural',
-    tags: '#cultural #socialevents',
-    description: 'Fosters cultural and social creativity.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Finance Club',
-    tags: '#investment #stockmarkets',
-    description: 'Explore finance, investing, and economics.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Litmus - Cultural',
-    tags: '#literature #poetry',
-    description: 'Promotes literature, poetry, and expression.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Coreografia',
-    tags: '#dance #cultural',
-    description: 'Official dance club of MUJ.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Humans of Manipal Jaipur',
-    tags: '#inspiringstories #community',
-    description: 'Sharing inspiring stories of MUJ.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Olympism',
-    tags: '#sportsmanship #olympics',
-    description: 'Promotes sportsmanship and Olympic spirit.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'The Music Club',
-    tags: '#music #musicians',
-    description: 'For passionate singers and instrumentalists.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Yes!+ Student Chapter',
-    tags: '#mindfulness #personalgrowth',
-    description: 'Promotes mindfulness and personal growth.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Cinefilia',
-    tags: '#theater #filmmaking',
-    description: 'Dramatics and filmmaking society.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Glitch!',
-    tags: '#art #technology',
-    description: 'Blending creativity, art and tech.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Abhigya',
-    tags: '#knowledge #debates',
-    description: 'Encourages knowledge-sharing and debate.',
-    category: 'Non-Technical',
-  },
-  {
-    name: 'Alternative Dispute Resolution Cell',
-    tags: '#law #disputeresolution',
-    description: 'For legal discussions and conflict resolution.',
-    category: 'Non-Technical',
-  }
-];
+import { supabase } from '../supabaseClient';
+import { Link } from 'react-router-dom';
 
 const Clubs = () => {
+  const [clubs, setClubs] = useState([]); // 👈 DYNAMIC STATE
   const [filter, setFilter] = useState('All');
+
+  // 👈 1. FETCH CLUBS (MAIN PAGE)
+  useEffect(() => {
+    fetch('http://localhost:5001/clubs')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setClubs(data.data);
+      })
+      .catch(err => console.error("Error fetching clubs:", err));
+  }, []);
+
+  // 👈 2. CLUB CLICK FUNCTIONALITY
+  const handleClubClick = async (clubId) => {
+    try {
+      const res = await fetch(`http://localhost:5001/clubs/${clubId}`);
+      const data = await res.json();
+      if (data.success) {
+        // Minimal existing UI approach: Alert the details dynamically
+        alert(`Club: ${data.data.name}\nEmail: ${data.data.contact_email}\nDescription: ${data.data.description}`);
+      }
+    } catch (err) {
+      alert("API Error fetching details.");
+    }
+  };
+
+  // handleJoin moved to ClubMemberJoin.jsx
 
   const filteredClubs =
     filter === 'All' ? clubs : clubs.filter((club) => club.category === filter);
@@ -199,14 +71,17 @@ const Clubs = () => {
       {/* ✅ Clubs Grid */}
       <div className="clubs-grid">
         {filteredClubs.map((club, index) => (
-          <div className="club-card" key={index}>
+          <div className="club-card" key={club.id || index} onClick={() => handleClubClick(club.id)}>
             <h3>{club.name}</h3>
-            <p className="club-tags">{club.tags}</p>
+            {/* Fallback to category if tags are missing on backend */}
+            <p className="club-tags">{club.category}</p>
             <p className="club-description">{club.description}</p>
-            <Link to="/join-community">
-  <button className="club-join-btn">Join Club Now</button>
-</Link>
-
+            {/* Restored <Link> wrapping to navigate to the options page */}
+            <Link to="/join-community" state={{ clubId: club.id }} onClick={e => e.stopPropagation()}>
+              <button className="club-join-btn">
+                Join Club Now
+              </button>
+            </Link>
           </div>
         ))}
       </div>

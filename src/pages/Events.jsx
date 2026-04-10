@@ -36,12 +36,12 @@ export default function Events() {
   }, []);
 
   if (loading) {
-    return <div style={{ padding: 24 }}>Loading events…</div>;
+    return <div className="events-container-wrapper loading-state">Loading events…</div>;
   }
 
   if (err) {
     return (
-      <div style={{ padding: 24, color: "#b00020" }}>
+      <div className="events-container-wrapper error-state">
         ⚠️ {err}
       </div>
     );
@@ -49,34 +49,39 @@ export default function Events() {
 
   if (!events.length) {
     return (
-      <div style={{ padding: 24, color: "#777" }}>
-        No events yet.
+      <div className="events-container-wrapper empty-state">
+        No events yet. Stay tuned!
       </div>
     );
   }
 
   return (
     <div className="events-container">
-      <h2 className="events-title">All Events</h2>
+      <div className="events-banner">
+        <img src="/images/banner/all_events.png" alt="All Events Banner" />
+      </div>
+      
+      <div className="events-header">
+        <h2 className="events-title">All Events</h2>
+        <div className="title-underline"></div>
+      </div>
 
       <div className="events-grid">
         {events.map((event) => (
           <div className="event-card" key={event.id}>
             
-            {event.image && (
-              <img
-                src={event.image}
-                alt={event.title}
-                className="event-image"
-              />
-            )}
-
             <div className="event-content">
               <h3>{event.title}</h3>
 
               {event.start_time && (
                 <p className="event-date">
-                  {new Date(event.start_time).toLocaleString()}
+                  <span className="icon">📅</span> {new Date(event.start_time).toLocaleString()}
+                </p>
+              )}
+
+              {event.location && (
+                <p className="event-location">
+                  <span className="icon">📍</span> {event.location}
                 </p>
               )}
 
@@ -86,19 +91,13 @@ export default function Events() {
                 </p>
               )}
 
-              {event.location && (
-                <p className="event-location">
-                  <strong>📍</strong> {event.location}
-                </p>
-              )}
-
               <span className="event-category">
                 {event.category ||
                   (event.is_published ? "Published" : "Draft")}
               </span>
 
               {/* ✅ REGISTER BUTTON */}
-              <Link to={`/register/${event.id}`}>
+              <Link to={`/register/${event.id}`} className="participate-btn-link">
                 <button className="participate-btn">
                   Participate Now
                 </button>

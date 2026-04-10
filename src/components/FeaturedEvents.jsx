@@ -1,5 +1,4 @@
 // src/components/FeaturedEvents.jsx
-
 import React from 'react';
 import './FeaturedEvents.css';
 import { Link } from 'react-router-dom';
@@ -21,7 +20,7 @@ const events = [
     buttonColor: '#5e6bff',
   },
   {
-    title: 'Dandiya Night ',
+    title: 'Dandiya Night',
     description: 'Experience diverse cultural performances, traditional dances, and music from around the world.',
     date: 'September 30, 2025',
     icon: '🎭',
@@ -32,21 +31,24 @@ const events = [
 const FeaturedEvents = () => {
   return (
     <section className="featured-events">
-      <h2 className="featured-title">Featured Events</h2>
+      <div className="section-header">
+        <h2 className="featured-title">Featured Events</h2>
+        <div className="title-underline"></div>
+      </div>
       <div className="featured-event-cards">
         {events.map((event, index) => (
           <div className="featured-event-card" key={index}>
-            <div className="featured-event-icon">{event.icon}</div>
+            <div className="featured-event-icon">
+              <span className="icon-bg">{event.icon}</span>
+            </div>
             <h3>{event.title}</h3>
             <p>{event.description}</p>
             <div className="featured-event-date">
               <FaCalendarAlt className="calendar-icon" /> {event.date}
             </div>
-<Link to={`/register/${encodeURIComponent(event.title)}`}>
-  <button className="register-btn">Register Now</button>
-</Link>
-
-      
+            <Link to={`/register/${encodeURIComponent(event.title)}`}>
+              <button className="register-btn">Register Now</button>
+            </Link>
           </div>
         ))}
       </div>

@@ -6,6 +6,7 @@ import EventCard from '../components/EventCard';
 import FeaturedEvents from '../components/FeaturedEvents'; // Newly added
 
 import ExploreSection from "../components/ExploreSection";
+import StatsSection from "../components/StatsSection";
 import Footer from '../components/Footer';
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
     <div className="home">
       <Navbar />
       <UpcomingEvents />
+      <StatsSection />
       <FeaturedEvents />
       <ExploreSection />
       

@@ -1,66 +1,131 @@
+/* src/components/ExploreSection.css */
+
 .explore-wrapper {
-    padding: 80px 10% 120px 10%;
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    text-align: center;
-    color: white;
-  }
-  
-  .explore-header h2 {
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 10px;
-  }
-  
-  .explore-header p {
-    opacity: 0.8;
-    margin-bottom: 60px;
-  }
-  
-  .explore-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 40px;
-  }
-  
-  .explore-card {
-    background: linear-gradient(180deg, #6d28d9, #4c1d95);
-    padding: 40px 30px;
-    border-radius: 25px;
-    text-align: left;
-    transition: 0.3s ease;
-  }
-  
-  .explore-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  }
-  
-  .explore-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
-  }
-  
-  .explore-card h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  
-  .explore-card p {
-    font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 25px;
-  }
-  
-  .explore-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 25px;
-    background: linear-gradient(90deg, #f43f5e, #f97316);
-    color: white;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .explore-wrapper {
-    margin-bottom: 0;
-  }
-  
+  padding: 4rem 5% 8rem 5%;
+  background: transparent;
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 10;
+}
+
+.explore-header {
+  margin-bottom: 4rem;
+}
+
+.explore-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #fff, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.explore-subtitle {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.explore-card {
+  padding: 2.5rem 1.5rem;
+  border-radius: 24px;
+  text-align: left;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-jaipur {
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+}
+
+.card-clubs {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+}
+
+.card-events {
+  background: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%);
+}
+
+.explore-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  z-index: 1;
+}
+
+.explore-card>* {
+  position: relative;
+  z-index: 2;
+}
+
+.explore-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.explore-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.explore-card:hover .explore-icon {
+  transform: scale(1.1);
+}
+
+.explore-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.explore-card p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  flex-grow: 1;
+}
+
+.explore-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+
+.explore-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(5px);
+}

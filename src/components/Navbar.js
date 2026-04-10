@@ -18,8 +18,8 @@ const Navbar = () => {
   // Demo calendar data (you can replace later)
   const eventData = [
     { date: new Date(2025, 6, 30), name: 'Dance Fiesta', location: 'Auditorium', time: '5:00 PM' },
-    { date: new Date(2025, 7, 2),  name: 'Tech Symposium', location: 'Seminar Hall 2', time: '10:00 AM' },
-    { date: new Date(2025, 7, 5),  name: 'Music Night',    location: 'Central Lawn',  time: '7:30 PM' },
+    { date: new Date(2025, 7, 2), name: 'Tech Symposium', location: 'Seminar Hall 2', time: '10:00 AM' },
+    { date: new Date(2025, 7, 5), name: 'Music Night', location: 'Central Lawn', time: '7:30 PM' },
   ];
   const eventDates = eventData.map(e => e.date);
 
@@ -112,29 +112,29 @@ const Navbar = () => {
       </nav>
 
       {sidebarOpen && (
-  <div
-    className="backdrop show"
-    onClick={closeSidebar}
-  />
-)}
+        <div
+          className="backdrop show"
+          onClick={closeSidebar}
+        />
+      )}
 
 
-<aside className={`sidebar ${sidebarOpen ? 'is-open' : ''}`} aria-hidden={!sidebarOpen}>
-  <button className="close-btn" onClick={closeSidebar} aria-label="Close menu">✕</button>
+      <aside className={`sidebar ${sidebarOpen ? 'is-open' : ''}`} aria-hidden={!sidebarOpen}>
+        <button className="close-btn" onClick={closeSidebar} aria-label="Close menu">✕</button>
 
-  {/* 🔥 Sidebar Title */}
-  <div
-    style={{
-      fontSize: "20px",
-      fontWeight: "700",
-      color: "white",
-      marginBottom: "20px"
-    }}
-  >
-    Menu
-  </div>
+        {/* 🔥 Sidebar Title */}
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: "700",
+            color: "white",
+            marginBottom: "20px"
+          }}
+        >
+          Menu
+        </div>
 
-  <ul>
+        <ul>
 
           <li>
             <Link to="/" onClick={closeSidebar}>

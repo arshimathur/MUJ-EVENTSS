@@ -58,6 +58,32 @@ app.post("/auth/email", async (req, res) => {
   }
 });
 
+/* ================= CONTACT US ================= */
+
+app.post("/contact", async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const { error } = await supabaseAdmin
+      .from("contact_messages")
+      .insert([{ name, email, subject, message }]);
+
+    if (error) {
+      console.error("Contact insert error:", error);
+      return res.status(500).json({ error: "Failed to submit message" });
+    }
+
+    res.status(201).json({ message: "Message sent successfully" });
+  } catch (err) {
+    console.error("Contact error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 /* ================= GET EVENTS ================= */
 
 app.get("/events", async (_req, res) => {
@@ -197,7 +223,7 @@ app.post("/registrations", authenticate, async (req, res) => {
           last_name: lastName || null,
           email,
           phone: phone || null,
-          reg_number: regNumber|| null,
+          reg_number: regNumber || null,
           attendees: attendees ? Number(attendees) : 1,
           requirements: requirements || null
         }
@@ -243,43 +269,7 @@ app.get("/dashboard/student", authenticate, async (req, res) => {
   }
 });
 
-app.get("/dashboard/teacher", authenticate, async (req, res) => {
-  try {
-    const userId = req.user.id;
 
-    /* Get events created by teacher */
-    const { data: events, error: eventsError } = await supabaseAdmin
-      .from("events")
-      .select("*")
-      .eq("created_by", userId);
-
-    if (eventsError) throw eventsError;
-
-    /* Get registrations count */
-    const eventIds = events.map(e => e.id);
-
-    let registrations = [];
-    if (eventIds.length > 0) {
-      const { data, error } = await supabaseAdmin
-        .from("registrations")
-        .select("*")
-        .in("event_id", eventIds);
-
-      if (error) throw error;
-      registrations = data;
-    }
-
-    res.json({
-      active_events: events.length,
-      total_registrations: registrations.length,
-      events
-    });
-
-  } catch (err) {
-    console.error("Teacher dashboard error:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 /* ================= AUTH ME ================= */
 
@@ -297,6 +287,43 @@ app.get("/auth/me", authenticate, async (req, res) => {
 
   } catch (err) {
     console.error("Auth/me error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= PROFILE SETTINGS ================= */
+
+app.get("/profile", authenticate, async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("profiles")
+      .select("*")
+      .eq("id", req.user.id)
+      .single();
+
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    console.error("Profile GET error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put("/profile", authenticate, async (req, res) => {
+  try {
+    const updates = req.body;
+
+    const { data, error } = await supabaseAdmin
+      .from("profiles")
+      .update(updates)
+      .eq("id", req.user.id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.json({ message: "Profile updated successfully", data });
+  } catch (err) {
+    console.error("Profile PUT error:", err);
     res.status(500).json({ error: err.message });
   }
 });

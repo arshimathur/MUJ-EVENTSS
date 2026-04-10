@@ -1,9 +1,44 @@
 // src/pages/Contact.js
-import React from 'react';
+import React, { useState } from 'react';
 import './Contact.css';
 import mujCampus from '../assets/muj-campus.jpg'; // adjust path if needed
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [status, setStatus] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+
+    try {
+      const response = await fetch('http://localhost:8080/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setStatus('An error occurred. Please try again later.');
+    }
+  };
+
   return (
     <div
       className="contact-container"
@@ -18,12 +53,13 @@ const Contact = () => {
         <p>We'd love to hear from you! Reach out for queries, feedback or collaboration.</p>
 
         <div className="contact-content">
-          <form className="contact-form">
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <input type="text" placeholder="Subject" />
-            <textarea placeholder="Your Message" rows="5" required></textarea>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+            <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
+            <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} />
+            <textarea name="message" placeholder="Your Message" rows="5" value={formData.message} onChange={handleChange} required></textarea>
             <button type="submit">Send Message</button>
+            {status && <p className="status-message" style={{ marginTop: '10px', color: '#fff', fontWeight: 'bold' }}>{status}</p>}
           </form>
 
           <div className="contact-info">

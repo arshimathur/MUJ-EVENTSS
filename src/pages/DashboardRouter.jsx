@@ -38,6 +38,6 @@ export default function DashboardRouter() {
 
   if (role === "student") return <StudentDashboard />;
   if (role === "club" || role === "admin") return <ClubDashboard />;
-  
+
   return <div>No dashboard available</div>;
 }

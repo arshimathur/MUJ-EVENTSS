@@ -1,5 +1,7 @@
 // src/pages/ClubMemberJoin.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 
 export default function ClubMemberJoin() {
   const [form, setForm] = useState({
@@ -11,6 +13,14 @@ export default function ClubMemberJoin() {
     interests: [],
     motivation: ""
   });
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.email) {
+        setForm(prev => ({ ...prev, email: user.email }));
+      }
+    });
+  }, []);
 
   const handleInput = e => {
     const { name, value, type, checked } = e.target;
@@ -25,27 +35,71 @@ export default function ClubMemberJoin() {
     }
   };
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const clubId = location.state?.clubId;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!clubId) {
+      alert("Missing Club ID! Please select a club from the Clubs page.");
+      return;
+    }
+
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      alert("Error: You must be logged in to join a club!");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5001/clubs/${clubId}/join`, {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(form)
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        alert("Application sent successfully!");
+        navigate('/clubs'); // Redirect back to clubs board
+      } else {
+        alert(data.message || "You have already joined or request is pending.");
+      }
+    } catch (err) {
+      alert("API Error submitting application.");
+    }
+  };
+
   return (
     <div style={{
       minHeight: "100vh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "linear-gradient(120deg,#6f51fe 0,#1ecbe1 100%)"
+      background: "linear-gradient(120deg,#6f51fe 0,#1ecbe1 100%)",
+      padding: "60px 20px",
+      boxSizing: "border-box"
     }}>
-      <form style={{
+      <form onSubmit={handleSubmit} style={{
         background: "#fff",
-        width: 480,
+        width: "100%",
+        maxWidth: 480,
         borderRadius: 20,
         padding: "36px 32px",
-        boxShadow: "0 8px 38px rgba(54,42,139,.16)"
+        boxShadow: "0 8px 38px rgba(54,42,139,.16)",
+        boxSizing: "border-box"
       }}>
         <div style={{ fontWeight: 700, fontSize: 28, marginBottom: 14 }}>Join as Club Member</div>
         <div style={{ display: "flex", gap: 12 }}>
           <input name="first" required placeholder="First Name" style={fld} onChange={handleInput} />
           <input name="last" required placeholder="Last Name" style={fld} onChange={handleInput} />
         </div>
-        <input name="email" required placeholder="Email Address" style={fld} onChange={handleInput} />
+        <input name="email" value={form.email} required placeholder="Email Address" style={fld} onChange={handleInput} />
         <input name="phone" required placeholder="Phone Number" style={fld} onChange={handleInput} />
         <input name="reg" required placeholder="Enter your registration number" style={fld} onChange={handleInput} />
         <div style={{ margin: "14px 0 6px", fontWeight: 600 }}>Interests</div>
@@ -79,5 +133,5 @@ export default function ClubMemberJoin() {
 }
 
 const fld = {
-  width: "100%", margin: "12px 0 0", padding: "11px 13px", borderRadius: 8, border: "1px solid #ececf7", fontSize: 16
+  width: "100%", margin: "12px 0 0", padding: "11px 13px", borderRadius: 8, border: "1px solid #ececf7", fontSize: 16, boxSizing: "border-box"
 };

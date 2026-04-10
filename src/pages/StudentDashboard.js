@@ -176,9 +176,8 @@ export default function StudentDashboard() {
           <div className="sd-card">
             <h4>Quick Actions</h4>
             <div className="sd-actions">
-              <a className="btn" href="/create-event">Create Event</a>
               <a className="btn ghost" href="/leaderboard">Leaderboard</a>
-              <a className="btn ghost" href="/profile">Profile</a>
+              <a className="btn ghost" href="/settings">Profile</a>
             </div>
           </div>
         </aside>

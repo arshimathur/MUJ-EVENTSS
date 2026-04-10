@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./JaipurEvents.css";
 import culturalfestImg from '../assets/images 2/culturalfest.jpg';
 import musicfestImg from '../assets/images 2/musicfest.jpg';
@@ -9,66 +9,42 @@ import chokhidhaaniImg from '../assets/images 2/chokhidhaani.jpg';
 import vintagerallyImg from '../assets/images 2/vintagerally.jpg';
 import scienceexpoImg from '../assets/images 2/scienceexpo.jpg';
 import foodfiestaImg from '../assets/images 2/foodfiesta.jpg';
-
+import techfestImg from '../assets/images 2/techfest.jpg';
+import startupImg from '../assets/images 2/startup.jpg';
+import foodfestImg from '../assets/images 2/foodfest.jpg';
 
 const JaipurEvents = () => {
-  const events = [
-    {
-      title: "Jaipur Literature Fest",
-      description: "A grand celebration of literature and ideas.",
-      location: "Diggi Palace, Jaipur",
-      image: culturalfestImg,
-    },
-    {
-      title: "Jaipur Music Festival",
-      description: "Live music under the stars.",
-      location: "Albert Hall Museum",
-      image: musicfestImg,
-    },
-    {
-      title: "Heritage Walk",
-      description: "Guided walking tour of the Pink City.",
-      location: "Hawa Mahal to City Palace",
-      image: heritagewalkImg,
-    },
-    {
-      title: "Light & Sound Show",
-      description: "History comes alive at Amer Fort.",
-      location: "Amer Fort",
-      image: lightsoundImg,
-    },
-    {
-      title: "Handicrafts Bazaar",
-      description: "Explore local artisans and crafts.",
-      location: "Jawahar Kala Kendra",
-      image: handicraftsImg,
-    },
-    {
-      title: "Cultural Evening",
-      description: "Folk music, dance, and regional food.",
-      location: "Chokhi Dhani",
-      image: chokhidhaaniImg,
-    },
-    {
-      title: "Vintage Car Rally",
-      description: "A parade of heritage automobiles.",
-      location: "JLN Marg",
-      image: vintagerallyImg,
-    },
-    {
-      title: "Science Expo",
-      description: "For young minds and curious souls.",
-      location: "Birla Auditorium",
-      image: scienceexpoImg,
-    },
-    {
-      title: "Food Fiesta",
-      description: "A non-seafood paradise for all ages.",
-      location: "Jawahar Circle",
-      image: foodfiestaImg,
-    },
-  ];
-  
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/events")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Map backend titles to imported static images to preserve existing UI looks
+          const mapping = {
+            "Jaipur Literature Fest": culturalfestImg,
+            "Jaipur Music Festival": musicfestImg,
+            "Heritage Walk": heritagewalkImg,
+            "Light & Sound Show": lightsoundImg,
+            "Handicrafts Bazaar": handicraftsImg,
+            "Cultural Evening": chokhidhaaniImg,
+            "Vintage Car Rally": vintagerallyImg,
+            "Science Expo": scienceexpoImg,
+            "Food Fiesta": foodfiestaImg,
+            "Tech Expo Jaipur": techfestImg,
+            "Jaipur Startup Weekend": startupImg,
+            "Rajasthani Food Fest": foodfestImg
+          };
+          const formatted = data.data.map(e => ({
+            ...e,
+            image: mapping[e.title] || e.image_url
+          }));
+          setEvents(formatted);
+        }
+      })
+      .catch(err => console.error("Error fetching events:", err));
+  }, []);
 
   return (
     <div className="jaipur-events">
@@ -92,7 +68,7 @@ const JaipurEvents = () => {
             <h3>{event.title}</h3>
             <p>{event.description}</p>
             <p className="location">{event.location}</p>
-            <button className="book-now-btn">Book Now</button>
+            <button className="book-now-btn" onClick={() => window.open(event.external_url, "_blank")}>Book Now</button>
           </div>
         ))}
    
