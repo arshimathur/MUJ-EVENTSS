@@ -220,8 +220,6 @@ The system is modular, scalable, and cloud-deployment ready.
 
 ##  Authors
 
-Ishika  
-Registration No: 23FE10CSE00102  
 
 Arshi Mathur  
 Registration No: 23FE10CSE00002  
