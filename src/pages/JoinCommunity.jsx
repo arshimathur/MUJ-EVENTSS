@@ -1,6 +1,7 @@
 // src/pages/JoinCommunity.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function JoinCommunity() {
   const location = useLocation();
@@ -13,7 +14,7 @@ export default function JoinCommunity() {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:5001/clubs/${clubId}`);
+      const res = await fetch(`${API_URL}/clubs/${clubId}`);
       const data = await res.json();
       if (data.success && data.data) {
         // Fallback to MUJ central if specific website_url is null

@@ -1,10 +1,11 @@
 import { supabase } from "../../supabaseClient";
+import { API_URL } from "../../config/api";
 
 export default function LoginButton() {
   const sendMagic = async () => {
     const email = prompt("Enter your email to login:");
     if (!email) return;
-    const res = await fetch("http://localhost:8080/auth/email", {
+    const res = await fetch(`${API_URL}/auth/email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email })

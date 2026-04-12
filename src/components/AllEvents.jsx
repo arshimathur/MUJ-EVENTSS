@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const API = "http://localhost:8080";
+import { API_URL } from "../config/api";
 
 export default function AllEvents() {
   const [events, setEvents] = useState([]);
@@ -11,7 +10,7 @@ export default function AllEvents() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API}/events`);
+        const res = await fetch(`${API_URL}/events`);
         if (!res.ok) throw new Error("Failed to load events");
         setEvents(await res.json());
       } catch (e) {

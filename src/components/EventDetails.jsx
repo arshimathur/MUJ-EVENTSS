@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-
-const API = "http://localhost:8080";
+import { API_URL } from "../config/api";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -12,7 +11,7 @@ export default function EventDetails() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API}/events/${id}`);
+        const res = await fetch(`${API_URL}/events/${id}`);
         if (!res.ok) throw new Error("Event not found");
         setEvt(await res.json());
       } catch (e) {

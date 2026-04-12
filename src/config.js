@@ -1,2 +1,2 @@
 // src/config.js
-export const API = process.env.REACT_APP_API_URL || "http://localhost:8080";
+export { API_URL as API } from './config/api';

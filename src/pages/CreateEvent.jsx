@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CreateEvent.css";
 import { supabase } from "../supabaseClient";
-
+import { API_URL } from "../config/api";
 
 export default function CreateEvent() {
   const [form, setForm] = useState({
@@ -33,7 +33,7 @@ export default function CreateEvent() {
         return;
       }
   
-      const res = await fetch("http://localhost:8080/events", {
+      const res = await fetch(`${API_URL}/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

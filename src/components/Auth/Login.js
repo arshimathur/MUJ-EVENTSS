@@ -1,5 +1,5 @@
 import { supabase } from "../../supabaseClient";
-
+import { API_URL } from "../../config/api";
 
 export default function Login() {
 
@@ -8,7 +8,7 @@ export default function Login() {
 
     if (!email) return;
 
-    const res = await fetch("http://localhost:8080/auth/email", {
+    const res = await fetch(`${API_URL}/auth/email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email })

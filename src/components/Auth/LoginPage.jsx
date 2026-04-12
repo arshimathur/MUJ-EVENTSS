@@ -7,6 +7,7 @@ import {
   getStoredActiveRole,
   setStoredActiveRole
 } from "../../utils/roleAccess";
+import { API_URL } from "../../config/api";
 
 const MUJ_DOMAIN = "@muj.manipal.edu";
 
@@ -45,7 +46,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       setStoredActiveRole(role);
-      const res = await fetch("http://localhost:8080/auth/email", {
+      const res = await fetch(`${API_URL}/auth/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })

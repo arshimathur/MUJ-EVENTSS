@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Events.css";
+import { API_URL } from "../config/api";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:8080";
 const toneCycle = ["rose", "sky", "amber", "mint"];
 
 export default function Events() {
@@ -17,8 +17,7 @@ export default function Events() {
       try {
         setLoading(true);
         setErr("");
-
-        const res = await fetch(`${API}/events`);
+        const res = await fetch(`${API_URL}/events`);
 
         if (!res.ok) {
           throw new Error(`Failed to load events (${res.status})`);

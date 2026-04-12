@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { API_URL } from '../config/api';
 
 export default function ClubTeamApply() {
   const [form, setForm] = useState({
@@ -47,7 +48,7 @@ export default function ClubTeamApply() {
     try {
       const { resume, ...formData } = form; // Strip out the File object so it doesn't break JSON
       
-      const res = await fetch(`http://localhost:5001/clubs/${clubId}/join`, {
+      const res = await fetch(`${API_URL}/clubs/${clubId}/join`, {
         method: 'POST',
         headers: { 
           'Authorization': `Bearer ${session.access_token}`,
