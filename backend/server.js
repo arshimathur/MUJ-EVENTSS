@@ -1,4 +1,11 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
+
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+  console.error("❌ Missing Supabase environment variables");
+  console.log("DEBUG:", process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  process.exit(1);
+}
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
