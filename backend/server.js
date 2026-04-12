@@ -104,6 +104,28 @@ app.get("/events", async (_req, res) => {
   }
 });
 
+app.get("/events/my", authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { data, error } = await supabaseAdmin
+      .from("events")
+      .select("*")
+      .eq("created_by", userId)
+      .order("start_time", { ascending: false });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json(data);
+
+  } catch (err) {
+    console.error("My events error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 /* ================= GET SINGLE EVENT ================= */
 
 app.get("/events/:id", async (req, res) => {
@@ -269,6 +291,111 @@ app.get("/dashboard/student", authenticate, async (req, res) => {
   }
 });
 
+app.get("/dashboard/calendar", authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { data: profile, error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+
+    if (profileError) throw profileError;
+
+    const role = profile?.role || "student";
+    let events = [];
+
+    if (role === "student") {
+      const { data, error } = await supabaseAdmin
+        .from("registrations")
+        .select(`
+          id,
+          attendees,
+          created_at,
+          events (
+            id,
+            title,
+            location,
+            start_time,
+            capacity,
+            created_by
+          )
+        `)
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      events = (data || [])
+        .map((item) => {
+          const event = item.events;
+          if (!event) return null;
+
+          return {
+            id: event.id,
+            title: event.title,
+            location: event.location,
+            start_time: event.start_time,
+            capacity: event.capacity || 0,
+            attendees: Number(item.attendees) || 1,
+            source: "registration"
+          };
+        })
+        .filter(Boolean);
+    } else {
+      let query = supabaseAdmin
+        .from("events")
+        .select("id, title, location, start_time, capacity, created_by")
+        .order("start_time", { ascending: true });
+
+      if (role !== "admin") {
+        query = query.eq("created_by", userId);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+
+      const baseEvents = data || [];
+      const eventIds = baseEvents.map((event) => event.id);
+      let registrationTotals = {};
+
+      if (eventIds.length > 0) {
+        const { data: registrations, error: registrationsError } = await supabaseAdmin
+          .from("registrations")
+          .select("event_id, attendees")
+          .in("event_id", eventIds);
+
+        if (registrationsError) throw registrationsError;
+
+        registrationTotals = (registrations || []).reduce((acc, registration) => {
+          const count = Number(registration.attendees) || 1;
+          acc[registration.event_id] = (acc[registration.event_id] || 0) + count;
+          return acc;
+        }, {});
+      }
+
+      events = baseEvents.map((event) => ({
+        id: event.id,
+        title: event.title,
+        location: event.location,
+        start_time: event.start_time,
+        capacity: event.capacity || 0,
+        attendees: registrationTotals[event.id] || 0,
+        source: role === "admin" ? "overview" : "hosted"
+      }));
+    }
+
+    res.json({
+      role,
+      events
+    });
+  } catch (err) {
+    console.error("Calendar dashboard error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 
 /* ================= AUTH ME ================= */
@@ -328,27 +455,138 @@ app.put("/profile", authenticate, async (req, res) => {
   }
 });
 
-app.get("/events/my", authenticate, async (req, res) => {
+app.get("/dashboard/analytics", authenticate, async (_req, res) => {
   try {
-    const userId = req.user.id;
-
-    const { data, error } = await supabaseAdmin
+    const { data: events, error: eventsError } = await supabaseAdmin
       .from("events")
-      .select("*")
-      .eq("created_by", userId)
-      .order("start_time", { ascending: false });
+      .select("id, title, capacity, is_published, start_time, location");
 
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    if (eventsError) throw eventsError;
 
-    res.json(data);
+    const { data: registrations, error: registrationsError } = await supabaseAdmin
+      .from("registrations")
+      .select("id, event_id, user_id, attendees, created_at");
 
+    if (registrationsError) throw registrationsError;
+
+    const safeEvents = Array.isArray(events) ? events : [];
+    const safeRegistrations = Array.isArray(registrations) ? registrations : [];
+
+    const registrationCountByEvent = safeRegistrations.reduce((acc, registration) => {
+      const attendeeCount = Number(registration.attendees) || 1;
+      acc[registration.event_id] = (acc[registration.event_id] || 0) + attendeeCount;
+      return acc;
+    }, {});
+
+    const totalEvents = safeEvents.length;
+    const totalRegistrations = safeRegistrations.reduce(
+      (sum, registration) => sum + (Number(registration.attendees) || 1),
+      0
+    );
+    const activeStudents = new Set(
+      safeRegistrations.map((registration) => registration.user_id).filter(Boolean)
+    ).size;
+    const publishedEvents = safeEvents.filter((event) => event.is_published).length;
+    const totalCapacity = safeEvents.reduce(
+      (sum, event) => sum + (Number(event.capacity) || 0),
+      0
+    );
+    const avgAttendance = totalEvents
+      ? Math.round(totalRegistrations / totalEvents)
+      : 0;
+    const fillRate = totalCapacity
+      ? Math.round((totalRegistrations / totalCapacity) * 100)
+      : 0;
+    const publishRate = totalEvents
+      ? Math.round((publishedEvents / totalEvents) * 100)
+      : 0;
+
+    const categoryTotals = safeEvents.reduce((acc, event) => {
+      const bucket = getAnalyticsBucket(event);
+      acc[bucket] = (acc[bucket] || 0) + 1;
+      return acc;
+    }, {});
+
+    const palette = ["#9d6cff", "#449cff", "#42d7a8", "#ff924a", "#f35b82", "#f2b134"];
+    const categories = Object.entries(categoryTotals)
+      .sort((a, b) => b[1] - a[1])
+      .map(([name, count], index) => ({
+        name,
+        count,
+        percent: totalEvents ? Math.round((count / totalEvents) * 100) : 0,
+        color: palette[index % palette.length]
+      }));
+
+    const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long" });
+    const monthlyMap = new Map();
+
+    safeEvents.forEach((event) => {
+      if (!event.start_time) return;
+      const date = new Date(event.start_time);
+      if (Number.isNaN(date.getTime())) return;
+
+      const key = `${date.getFullYear()}-${date.getMonth()}`;
+      const existing = monthlyMap.get(key) || {
+        key,
+        month: monthFormatter.format(date),
+        events: 0,
+        registrations: 0
+      };
+
+      existing.events += 1;
+      existing.registrations += registrationCountByEvent[event.id] || 0;
+      monthlyMap.set(key, existing);
+    });
+
+    const monthly = Array.from(monthlyMap.values())
+      .sort((a, b) => a.key.localeCompare(b.key))
+      .slice(-6)
+      .map(({ key, ...rest }, index) => ({
+        ...rest,
+        color: ["#faeefc", "#eaf5ff", "#edfaf4", "#fff1e8", "#eef2ff", "#fef3c7"][index % 6]
+      }));
+
+    res.json({
+      summary: {
+        total_events: totalEvents,
+        avg_attendance: avgAttendance,
+        active_students: activeStudents,
+        fill_rate: fillRate,
+        publish_rate: publishRate,
+        total_registrations: totalRegistrations
+      },
+      categories,
+      monthly
+    });
   } catch (err) {
-    console.error("My events error:", err);
-    res.status(500).json({ error: "Server error" });
+    console.error("Analytics dashboard error:", err);
+    res.status(500).json({ error: err.message });
   }
 });
+
+function getAnalyticsBucket(event) {
+  const title = String(event?.title || "").toLowerCase();
+  const location = String(event?.location || "").toLowerCase();
+  const haystack = `${title} ${location}`;
+
+  if (haystack.includes("tech") || haystack.includes("hack") || haystack.includes("robot")) {
+    return "Technical";
+  }
+
+  if (haystack.includes("music") || haystack.includes("dance") || haystack.includes("cultural")) {
+    return "Cultural";
+  }
+
+  if (haystack.includes("sport") || haystack.includes("tournament") || haystack.includes("match")) {
+    return "Sports";
+  }
+
+  if (haystack.includes("social") || haystack.includes("community") || haystack.includes("club")) {
+    return "Community";
+  }
+
+  return event?.is_published ? "Published Events" : "Draft Events";
+}
 app.get("/dashboard/teacher", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;

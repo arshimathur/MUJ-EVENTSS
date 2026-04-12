@@ -20,7 +20,7 @@ export default function TeacherDashboard() {
       const token = session.data.session?.access_token;
 
       if (!token) {
-        navigate("/login?next=/dashboard", { replace: true });
+        navigate("/login?next=/teacher-dashboard", { replace: true });
         return;
       }
 
@@ -83,7 +83,7 @@ export default function TeacherDashboard() {
               <a className="toggle btn-ghost" href="/student-dashboard">
                 👩‍🎓 Student View
               </a>
-              <a className="toggle btn-primary" href="/dashboard">
+              <a className="toggle btn-primary" href="/teacher-dashboard">
                 🧑‍🏫 Teacher View
               </a>
             </nav>

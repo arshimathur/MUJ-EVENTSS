@@ -13,8 +13,10 @@ import EventDetails from './components/EventDetails';
 import EventRegistration from './pages/EventRegistration';
 
 import ContactPage from './pages/ContactPage';
-import Dashboard from './pages/Dashboard';
 import StudentDashboard from './pages/StudentDashboard';
+import DashboardRouter from './pages/DashboardRouter';
+import Dashboard from './pages/Dashboard';
+import ClubDashboard from './pages/ClubDashboard';
 
 import Leaderboard from './pages/Leaderboard';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
@@ -29,6 +31,7 @@ import ClubTeamApply from './pages/ClubTeamApply';
 
 import SignUp from "./components/Auth/SignUp";
 import LoginPage from "./components/Auth/LoginPage";
+import RoleProtectedRoute from "./components/Auth/RoleProtectedRoute";
 
 function App() {
   return (
@@ -50,18 +53,83 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
 
         {/* Dashboards */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/dashboard" element={<DashboardRouter />} />
+        <Route
+          path="/student-dashboard"
+          element={
+            <RoleProtectedRoute allowedRoles={["student", "admin"]}>
+              <StudentDashboard />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher-dashboard"
+          element={
+            <RoleProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <Dashboard />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/club-dashboard"
+          element={
+            <RoleProtectedRoute allowedRoles={["club", "admin"]}>
+              <ClubDashboard />
+            </RoleProtectedRoute>
+          }
+        />
 
         {/* Teacher Tools */}
-        <Route path="/manage-students" element={<ManageStudents />} />
-        <Route path="/analytics" element={<AnalyticsDashboard />} />
-        <Route path="/create-event" element={<CreateEvent />} />
+        <Route
+          path="/manage-students"
+          element={
+            <RoleProtectedRoute allowedRoles={["teacher", "club", "admin"]}>
+              <ManageStudents />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <RoleProtectedRoute allowedRoles={["teacher", "club", "admin"]}>
+              <AnalyticsDashboard />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-event"
+          element={
+            <RoleProtectedRoute allowedRoles={["club", "admin"]}>
+              <CreateEvent />
+            </RoleProtectedRoute>
+          }
+        />
 
         {/* Student Tools */}
-        <Route path="/my-calendar" element={<StudentCalendar />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/settings" element={<ProfileSettings />} />
+        <Route
+          path="/my-calendar"
+          element={
+            <RoleProtectedRoute allowedRoles={["student", "teacher", "club", "admin"]}>
+              <StudentCalendar />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <RoleProtectedRoute allowedRoles={["student"]}>
+              <Leaderboard />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <RoleProtectedRoute allowedRoles={["student", "teacher", "club", "admin"]}>
+              <ProfileSettings />
+            </RoleProtectedRoute>
+          }
+        />
 
         {/* Community */}
         <Route path="/join-community" element={<JoinCommunity />} />

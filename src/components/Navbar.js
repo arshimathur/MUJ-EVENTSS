@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaBars, FaCalendarAlt, FaUserCircle, FaHome, FaCalendarCheck, FaUsers, FaCity, FaEnvelope } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { supabase } from "../supabaseClient";
+import { clearStoredActiveRole, getDashboardPathForRole, getStoredActiveRole } from "../utils/roleAccess";
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -14,6 +15,7 @@ const Navbar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [user, setUser] = useState(null);
   const calendarRef = useRef();
+  const dashboardPath = getDashboardPathForRole(getStoredActiveRole() || "student");
 
   // Demo calendar data (you can replace later)
   const eventData = [
@@ -45,6 +47,7 @@ const Navbar = () => {
 
   // logout
   const handleLogout = async () => {
+    clearStoredActiveRole();
     await supabase.auth.signOut();
     window.location.reload();
   };
@@ -67,7 +70,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <Link to="/dashboard" title="Dashboard" className="dashboard-icon">
+          <Link to={dashboardPath} title="Dashboard" className="dashboard-icon">
             <MdDashboard size={24} style={{ color: "#6e59f0" }} />
           </Link>
 
@@ -147,6 +150,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link to="/my-calendar" onClick={closeSidebar}>
+              <FaCalendarAlt style={{ marginRight: '9px', marginBottom: '-3px' }} /> My Calendar
+            </Link>
+          </li>
+          <li>
             <Link to="/clubs" onClick={closeSidebar}>
               <FaUsers style={{ marginRight: '9px', marginBottom: '-3px' }} /> Clubs
             </Link>
@@ -162,7 +170,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/dashboard" onClick={closeSidebar}>
+            <Link to={dashboardPath} onClick={closeSidebar}>
               <MdDashboard style={{ marginRight: '9px', marginBottom: '-3px' }} /> Dashboard
             </Link>
           </li>

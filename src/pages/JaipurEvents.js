@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./JaipurEvents.css";
+import { supabase } from "../supabaseClient";
 import culturalfestImg from '../assets/images 2/culturalfest.jpg';
 import musicfestImg from '../assets/images 2/musicfest.jpg';
 import heritagewalkImg from '../assets/images 2/heritagewalk.jpg';
@@ -15,35 +16,65 @@ import foodfestImg from '../assets/images 2/foodfest.jpg';
 
 const JaipurEvents = () => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5001/events")
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          // Map backend titles to imported static images to preserve existing UI looks
-          const mapping = {
-            "Jaipur Literature Fest": culturalfestImg,
-            "Jaipur Music Festival": musicfestImg,
-            "Heritage Walk": heritagewalkImg,
-            "Light & Sound Show": lightsoundImg,
-            "Handicrafts Bazaar": handicraftsImg,
-            "Cultural Evening": chokhidhaaniImg,
-            "Vintage Car Rally": vintagerallyImg,
-            "Science Expo": scienceexpoImg,
-            "Food Fiesta": foodfiestaImg,
-            "Tech Expo Jaipur": techfestImg,
-            "Jaipur Startup Weekend": startupImg,
-            "Rajasthani Food Fest": foodfestImg
-          };
-          const formatted = data.data.map(e => ({
-            ...e,
-            image: mapping[e.title] || e.image_url
-          }));
-          setEvents(formatted);
+    let isMounted = true;
+
+    async function loadJaipurEvents() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const { data, error: eventsError } = await supabase
+          .from("city_events")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (eventsError) {
+          throw eventsError;
         }
-      })
-      .catch(err => console.error("Error fetching events:", err));
+
+        const mapping = {
+          "Jaipur Literature Fest": culturalfestImg,
+          "Jaipur Music Festival": musicfestImg,
+          "Heritage Walk": heritagewalkImg,
+          "Light & Sound Show": lightsoundImg,
+          "Handicrafts Bazaar": handicraftsImg,
+          "Cultural Evening": chokhidhaaniImg,
+          "Vintage Car Rally": vintagerallyImg,
+          "Science Expo": scienceexpoImg,
+          "Food Fiesta": foodfiestaImg,
+          "Tech Expo Jaipur": techfestImg,
+          "Jaipur Startup Weekend": startupImg,
+          "Rajasthani Food Fest": foodfestImg
+        };
+
+        const formatted = (Array.isArray(data) ? data : []).map((event) => ({
+          ...event,
+          image: mapping[event.title] || event.image_url
+        }));
+
+        if (!isMounted) return;
+        setEvents(formatted);
+      } catch (err) {
+        console.error("Error fetching Jaipur events:", err);
+        if (!isMounted) return;
+        setEvents([]);
+        setError("Failed to load Jaipur events right now.");
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadJaipurEvents();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -59,16 +90,32 @@ const JaipurEvents = () => {
   
       {/* Section Title */}
       <h2 className="section-title">Events in Jaipur</h2>
+
+      {loading && <p className="jaipur-status">Loading Jaipur events...</p>}
+      {error && <p className="jaipur-status">{error}</p>}
   
       {/* Event Cards */}
       <div className="event-card-container">
+        {!loading && !error && events.length === 0 && (
+          <div className="event-card">
+            <h3>No Jaipur events found</h3>
+            <p>City events will appear here once they are available in the database.</p>
+          </div>
+        )}
+
         {events.map((event, index) => (
           <div className="event-card" key={index}>
             <img src={event.image} alt={event.title} className="event-image" />
             <h3>{event.title}</h3>
             <p>{event.description}</p>
             <p className="location">{event.location}</p>
-            <button className="book-now-btn" onClick={() => window.open(event.external_url, "_blank")}>Book Now</button>
+            <button
+              className="book-now-btn"
+              onClick={() => event.external_url && window.open(event.external_url, "_blank")}
+              disabled={!event.external_url}
+            >
+              {event.external_url ? "Book Now" : "Details Soon"}
+            </button>
           </div>
         ))}
    

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { API } from "../config";
+import { getDashboardPathForRole, getStoredActiveRole } from "../utils/roleAccess";
 
 import StudentDashboard from "./StudentDashboard";
-import Dashboard from "./Dashboard"; // Admin dashboard
 import ClubDashboard from "./ClubDashboard";
+import Dashboard from "./Dashboard";
+import AdminDashboardHub from "./AdminDashboardHub";
 
 export default function DashboardRouter() {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const activeRole = getStoredActiveRole();
 
   useEffect(() => {
     async function loadRole() {
@@ -36,8 +39,15 @@ export default function DashboardRouter() {
 
   if (loading) return <div>Loading dashboard...</div>;
 
-  if (role === "student") return <StudentDashboard />;
-  if (role === "club" || role === "admin") return <ClubDashboard />;
+  if (activeRole === "student") return <StudentDashboard />;
+  if (activeRole === "club") return <ClubDashboard />;
+  if (activeRole === "teacher") return <Dashboard />;
+  if (activeRole === "admin") return <AdminDashboardHub />;
 
-  return <div>No dashboard available</div>;
+  if (role === "student") return <StudentDashboard />;
+  if (role === "club") return <ClubDashboard />;
+  if (role === "teacher") return <Dashboard />;
+  if (role === "admin") return <AdminDashboardHub />;
+
+  return <div>No dashboard available. <a href={getDashboardPathForRole(activeRole)}>Go to dashboard</a></div>;
 }

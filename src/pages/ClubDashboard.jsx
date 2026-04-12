@@ -1,103 +1,229 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { API } from "../config";
-import "./ClubDashboard.css"; // We'll link to a new CSS file
+import "./StudentDashboard.css";
 
 export default function ClubDashboard() {
-  const [events, setEvents] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMyEvents();
-  }, []);
+    let isMounted = true;
 
-  async function fetchMyEvents() {
-    try {
-      const session = await supabase.auth.getSession();
-      const token = session.data.session?.access_token;
+    async function loadClubDashboard() {
+      try {
+        setLoading(true);
+        setErr("");
 
-      if (!token) return;
+        const session = await supabase.auth.getSession();
+        const token = session.data.session?.access_token;
 
-      const res = await fetch(`${API}/events/my`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+        if (!token) {
+          navigate("/login?next=/club-dashboard", { replace: true });
+          return;
         }
-      });
 
-      const data = await res.json();
-      setEvents(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
+        const [summaryRes, eventsRes] = await Promise.all([
+          fetch(`${API}/dashboard/teacher`, {
+            headers: { Authorization: `Bearer ${token}` }
+          }),
+          fetch(`${API}/events/my`, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+        ]);
 
-  async function deleteEvent(id) {
-    const session = await supabase.auth.getSession();
-    const token = session.data.session?.access_token;
+        const summaryJson = await summaryRes.json();
+        const eventsJson = await eventsRes.json();
 
-    await fetch(`${API}/events/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`
+        if (!summaryRes.ok) {
+          throw new Error(summaryJson.error || "Failed to load club dashboard");
+        }
+
+        if (!eventsRes.ok) {
+          throw new Error(eventsJson.error || "Failed to load your hosted events");
+        }
+
+        const eventDetails = Array.isArray(eventsJson) ? eventsJson : [];
+        const detailMap = new Map(eventDetails.map((event) => [event.id, event]));
+        const teacherEvents = Array.isArray(summaryJson.event_list) ? summaryJson.event_list : [];
+
+        const mergedEvents = teacherEvents.map((event) => {
+          const detail = detailMap.get(event.id) || {};
+          return {
+            ...detail,
+            ...event,
+            location: detail.location || "TBA",
+            start_time: detail.start_time || null
+          };
+        });
+
+        if (!isMounted) return;
+
+        setData({
+          kpis: summaryJson.kpis || {
+            active_events: 0,
+            total_students: 0,
+            attendance_pct: 0,
+            pending_approvals: 0
+          },
+          event_list: mergedEvents,
+          notifications: Array.isArray(summaryJson.notifications)
+            ? summaryJson.notifications
+            : [],
+          hosted_count: eventDetails.length
+        });
+      } catch (error) {
+        console.error(error);
+        if (!isMounted) return;
+        setErr(error.message || "Failed to load club dashboard");
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    });
+    }
 
-    fetchMyEvents(); // Refresh after deletion
+    loadClubDashboard();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
+
+  if (loading) {
+    return <div className="sd-loading">Loading club dashboard…</div>;
   }
 
-  if (loading) return <div className="cd-loading">Loading Dashboard...</div>;
+  if (err) {
+    return <div className="sd-error">{err}</div>;
+  }
+
+  if (!data) {
+    return <div className="sd-error">No club dashboard data available.</div>;
+  }
+
+  const { kpis, event_list, notifications, hosted_count } = data;
 
   return (
-    <div className="cd-page">
-      <div className="cd-hero-wrap">
-        <div className="cd-hero">
-          <div className="cd-hero-left">
-            <h1 className="cd-hero-title">Club Dashboard</h1>
-            <p className="cd-hero-sub">Manage your active events and club content.</p>
+    <div className="sd-page">
+      <div className="sd-hero-wrap">
+        <div className="sd-hero">
+          <div className="sd-hero-left">
+            <h1 className="sd-hero-title">Club Dashboard</h1>
+            <p className="sd-hero-sub">
+              Manage hosted events, track registrations, and handle club operations.
+            </p>
           </div>
-          <div className="cd-hero-right">
-            <Link to="/create-event" className="btn-primary">
-              + Create Event
-            </Link>
+
+          <div className="sd-hero-right">
+            <nav className="view-toggle">
+              <a className="toggle btn-ghost" href="/teacher-dashboard">
+                Teacher View
+              </a>
+              <a className="toggle btn-ghost" href="/analytics">
+                Analytics
+              </a>
+              <a className="toggle btn-primary" href="/club-dashboard">
+                Club View
+              </a>
+            </nav>
           </div>
         </div>
       </div>
 
-      <div className="cd-grid">
-        <section className="cd-main">
-          <div className="cd-panel">
-            <div className="cd-panel-header">
-              <h3>My Hosted Events</h3>
+      <div className="sd-kpis">
+        <KpiCard title="Hosted Events" value={hosted_count} />
+        <KpiCard title="Active Events" value={kpis.active_events || 0} />
+        <KpiCard title="Total Students" value={kpis.total_students || 0} />
+        <KpiCard title="Attendance" value={`${kpis.attendance_pct || 0}%`} />
+      </div>
+
+      <div className="sd-grid">
+        <section className="sd-main">
+          <div className="sd-panel">
+            <div className="sd-panel-header">
+              <h3>Event Management</h3>
+              <a className="sd-link" href="/events">
+                View all events
+              </a>
             </div>
 
-            <div className="cd-events">
-              {events.length === 0 && (
-                <div className="empty">You haven't created any events yet!</div>
-              )}
+            {event_list.length === 0 ? (
+              <div className="empty">No hosted events yet</div>
+            ) : (
+              event_list.map((event) => (
+                <div className="event-row" key={event.id}>
+                  <div>
+                    <div style={{ fontWeight: 700 }}>{event.title}</div>
+                    <div style={{ color: "#64748b", marginTop: 6 }}>
+                      {formatDate(event.start_time)} • {event.location}
+                    </div>
+                    <div style={{ color: "#666", marginTop: 6 }}>
+                      Capacity: {event.capacity || 0} • {event.booked || 0} booked
+                    </div>
+                  </div>
 
-              {events.map((event) => (
-                <div className="cd-event-card" key={event.id}>
-                  <div className="cd-event-info">
-                    <h3>{event.title}</h3>
-                    <p className="cd-meta">📍 {event.location} • 📅 {new Date(event.start_time).toLocaleString()}</p>
-                  </div>
-                  <div className="cd-event-actions">
-                    <button
-                      className="cd-btn-danger"
-                      onClick={() => deleteEvent(event.id)}
-                    >
-                      Delete Event
-                    </button>
-                  </div>
+                  <a className="btn small" href={`/events/${event.id}`}>
+                    Manage
+                  </a>
                 </div>
-              ))}
-            </div>
+              ))
+            )}
           </div>
         </section>
+
+        <aside className="sd-side">
+          <div className="sd-card">
+            <h4>Recent Notifications</h4>
+
+            {notifications.length === 0 ? (
+              <div className="empty">No recent notifications</div>
+            ) : (
+              notifications.map((notification, index) => (
+                <div key={index} style={{ padding: "8px 0" }}>
+                  {notification.message}
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="sd-card">
+            <h4>Club Actions</h4>
+
+            <div className="sd-actions">
+              <a className="btn" href="/create-event">
+                Create Event
+              </a>
+              <a className="btn ghost" href="/manage-students">
+                Manage Students
+              </a>
+              <a className="btn ghost" href="/analytics">
+                View Analytics
+              </a>
+              <a className="btn ghost" href="/settings">
+                Settings
+              </a>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
+}
+
+function KpiCard({ title, value }) {
+  return (
+    <div className="kpi-card">
+      <div className="kpi-title">{title}</div>
+      <div className="kpi-value">{value}</div>
+    </div>
+  );
+}
+
+function formatDate(value) {
+  if (!value) return "Date TBA";
+  return new Date(value).toLocaleString();
 }

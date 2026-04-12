@@ -108,7 +108,7 @@ export default function StudentDashboard() {
     <div className="sd-hero-right">
       <nav className="view-toggle">
         <a className="toggle btn-ghost" href="/student-dashboard">👩‍🎓 Student View</a>
-        <a className="toggle btn-primary" href="/dashboard">🧑‍🏫 Teacher View</a>
+        <a className="toggle btn-primary" href="/teacher-dashboard">🧑‍🏫 Teacher View</a>
       </nav>
     </div>
   </div>
