@@ -1,11 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config();
+// ❌ REMOVE dotenv completely (Render doesn't need it)
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-  console.error("❌ Missing Supabase environment variables");
-  console.log("DEBUG:", process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-  process.exit(1);
-}
+// import dotenv from "dotenv";
+// dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -13,6 +10,13 @@ import { createClient } from "@supabase/supabase-js";
 
 import { supabaseAdmin } from "./supabase.js";
 import { authenticate } from "./authMiddleware.js";
+
+/* ================= DEBUG ENV (VERY IMPORTANT) ================= */
+
+console.log("ENV DEBUG:", {
+  url: process.env.SUPABASE_URL,
+  key: process.env.SUPABASE_ANON_KEY?.slice(0, 10),
+});
 
 /* ================= SUPABASE CLIENT ================= */
 
